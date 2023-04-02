@@ -6,9 +6,14 @@ from pathlib import Path
 print("Starting script.")
 
 class SETTINGS:
-    EXTENSIONS = [".jpeg",".png"]
+    EXTENSIONS = [".jpeg",".jpg",".png",".svg"]
     USE_MODIFIED_TIME = True
-    REVERT_CHANGES_MODE = True
+    REVERT_CHANGES_MODE = False
+    YEAR_FOLDER = True # makes a folder for each year
+    MONTH_FOLDER = True # makes a folder for each month
+    DAY_FOLDER = True  # makes a folder for each day
+    HOUR_FOLDER = False  # makes a folder for each hour
+    MINUTE_FOLDER = False  # makes a folder for each minute
 
 if SETTINGS.REVERT_CHANGES_MODE:
     root_directory = Path('.')
@@ -26,7 +31,19 @@ else:
                 file_timestamp = os.path.getctime(file)        
             file_date = datetime.datetime.fromtimestamp(file_timestamp)
             print(f'Date: {file_date}')
-            folder_path = f"{file_date.year}/{file_date.month}/{file_date.day}"
+            folder_path = ""
+            if SETTINGS.YEAR_FOLDER:
+                folder_path += str(file_date.year) + "/"
+            if SETTINGS.MONTH_FOLDER:
+                folder_path += str(file_date.month) + "/"
+            if SETTINGS.DAY_FOLDER:
+                folder_path += str(file_date.day) + "/"
+            if SETTINGS.HOUR_FOLDER:
+                folder_path += str(file_date.hour) + "/"
+            if SETTINGS.MINUTE_FOLDER:
+                folder_path += str(file_date.minute) + "/"
+            if folder_path[-1] == "/":
+                folder_path = folder_path[:-1]
             print(folder_path)
             path_exists = False
             Path(folder_path).mkdir(parents=True, exist_ok=True)
