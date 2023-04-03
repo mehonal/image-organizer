@@ -25,6 +25,9 @@ if SETTINGS.LOG_OPERATIONS:
     else:
         mode = 'a'
     log_file = open(SETTINGS.LOG_FILE_NAME, mode)
+    log_file.write(f"-----------------------------------------------\n")
+    start = datetime.now()
+    log_file.write(f"Log Initiated: {start}\n")
     del mode
 
 if SETTINGS.REVERT_CHANGES_MODE:
@@ -84,6 +87,10 @@ else:
                         log_file.write(log + "\n")
 
 if SETTINGS.LOG_OPERATIONS:
+    end = datetime.now()
+    log_file.write(f"Log Finished: {end}\n")
+    time_elapsed = (end - start).total_seconds()
+    log_file.write(f"Total Time Elapsed: {time_elapsed}\n")
     log_file.close()
 
 print("Script finished executing.")
