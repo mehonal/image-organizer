@@ -18,6 +18,11 @@ class SETTINGS:
     LOG_FILE_NAME =  'image_operations.log' # only used if LOG_OPERATIONS is set to True; name of the log file
     OVERWRITE_LOG_FILE = True # if set to True, it overwrites previous logs of operations from the past (assuming the log file name has not changed)
 
+for extension in SETTINGS.EXTENSIONS:
+    uppercase = extension.upper()
+    if uppercase not in SETTINGS.EXTENSIONS:
+        SETTINGS.EXTENSIONS.append(uppercase)
+
 files_moved_count = 0 # logs the number of files moved
 
 if SETTINGS.LOG_OPERATIONS:
