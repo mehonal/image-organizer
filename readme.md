@@ -24,8 +24,13 @@ Currently, settings are embedded into the script file itself under the class `SE
 
 
 # Compatibility
-The script has been tested to work on Linux and Windows.
+The script has been tested to work on Linux and Windows for core functionality. Further testing is needed on both operating systems.
 
 # Warnings
 - The script is still Work-In-Progress, and lacks enough testing so please be cautious with using it.
 - The REVERT_CHANGES_MODE currently recursively checks all folders in the root directory, and will move files with the matching file extensions regardless of whether they were moved by the script in the first place.
+- Please be cautious with using the script on a directory with subdirectories. This could result in undesired results (for instance, if REVERT_CHANGES_MODE is set to `True`, all relevant files will be recursively moved to the root from subdirectories that may not have been made from the script).
+
+# Planned Features & Changes
+- Optional setting to automatically delete folders after script is executed with REVERT_CHANGES_MODE
+- Optional setting to enable analyzing file names to extract date from them
