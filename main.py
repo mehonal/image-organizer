@@ -45,6 +45,7 @@ if SETTINGS.REVERT_CHANGES_MODE:
             if SETTINGS.LOG_OPERATIONS:
                 log_file.write(log + "\n")
             shutil.move(file, os.getcwd() + "/" + file.name)
+            files_moved_count += 1
 else:
     for file in os.listdir():
         if file.endswith(tuple(SETTINGS.EXTENSIONS)):
