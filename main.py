@@ -14,10 +14,18 @@ class SETTINGS:
     DAY_FOLDER = True  # makes a folder for each day
     HOUR_FOLDER = False  # makes a folder for each hour
     MINUTE_FOLDER = False  # makes a folder for each minute
-    LOG_OPERATIONS = True
+    LOG_OPERATIONS = True # logs operations performed in a log file
+    LOG_FILE_NAME =  'image_operations.log' # only used if LOG_OPERATIONS is set to True; name of the log file
+    OVERWRITE_LOG_FILE = True # if set to True, it overwrites previous logs of operations from the past (assuming the log file name has not changed)
+
 
 if SETTINGS.LOG_OPERATIONS:
-    log_file = open('image_operations.log', 'w')
+    if SETTINGS.OVERWRITE_LOG_FILE:
+        mode = 'w'
+    else:
+        mode = 'a'
+    log_file = open(SETTINGS.LOG_FILE_NAME, mode)
+    del mode
 
 if SETTINGS.REVERT_CHANGES_MODE:
     root_directory = Path('.')
