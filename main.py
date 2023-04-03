@@ -14,13 +14,20 @@ class SETTINGS:
     DAY_FOLDER = True  # makes a folder for each day
     HOUR_FOLDER = False  # makes a folder for each hour
     MINUTE_FOLDER = False  # makes a folder for each minute
+    LOG_OPERATIONS = True
+
+if SETTINGS.LOG_OPERATIONS:
+    log_file = open('image_operations.log', 'w')
 
 if SETTINGS.REVERT_CHANGES_MODE:
     root_directory = Path('.')
     size = 0
     for file in root_directory.glob("**/*"):
         if file.name.endswith(tuple(SETTINGS.EXTENSIONS)):
-            print(f"Moving {file} to root directory.")
+            log = f"Moving {file} to root directory."
+            print(log)
+            if SETTINGS.LOG_OPERATIONS:
+                log_file.write(log + "\n")
             shutil.move(file, os.getcwd() + "/" + file.name)
 else:
     for file in os.listdir():
@@ -31,7 +38,10 @@ else:
                 file_timestamp = os.path.getctime(file)        
             file_date = datetime.datetime.fromtimestamp(file_timestamp)
             if file_date and file_date is not None:
-                print(f'{file}: {file_date}')
+                log = f'{file}: {file_date}'
+                print(log)
+                if SETTINGS.LOG_OPERATIONS:
+                    log_file.write(log + "\n")
                 folder_path = ""
                 if SETTINGS.YEAR_FOLDER:
                     folder_path += str(file_date.year) + "/"
@@ -49,11 +59,23 @@ else:
                 Path(folder_path).mkdir(parents=True, exist_ok=True)
                 if folder_path != "":
                     if os.path.exists(folder_path):
-                        print(f"Moving {file} to {folder_path}")
+                        log = f"Moving {file} to {folder_path}"
+                        print(log)
+                        if SETTINGS.LOG_OPERATIONS:
+                            log_file.write(log + "\n")
                         shutil.move(os.getcwd() + "/" + file, folder_path + "/" + file)
                     else:
-                        print(f"Missing folder!")
+                        log = f"Missing folder \"{folder_path}\"!"
+                        print(log)
+                        if SETTINGS.LOG_OPERATIONS:
+                            log_file.write(log + "\n")
                 else:
-                    print("Skipped file")
+                    log = f"Skipped file: {file}"
+                    print(log)
+                    if SETTINGS.LOG_OPERATIONS:
+                        log_file.write(log + "\n")
+
+if SETTINGS.LOG_OPERATIONS:
+    log_file.close()
 
 print("Script finished executing.")
