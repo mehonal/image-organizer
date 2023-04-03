@@ -6,6 +6,7 @@ from pathlib import Path
 print("Starting script.")
 
 class SETTINGS:
+    USE_ALL_FILE_EXTENSIONS = False # if set to true, ignores provided extensions and works with all files present in the root directory
     EXTENSIONS = [".jpeg",".jpg",".png",".svg"] # note: this is case sensitive
     USE_MODIFIED_TIME = True
     REVERT_CHANGES_MODE = False
@@ -44,7 +45,7 @@ if SETTINGS.REVERT_CHANGES_MODE:
     root_directory = Path('.')
     size = 0
     for file in root_directory.glob("**/*"):
-        if file.name.endswith(tuple(SETTINGS.EXTENSIONS)):
+        if (SETTINGS.USE_ALL_FILE_EXTENSIONS and not file.name.endswith('.py')) or file.name.endswith(tuple(SETTINGS.EXTENSIONS)):
             log = f"Moving {file} to root directory."
             print(log)
             if SETTINGS.LOG_OPERATIONS:
@@ -53,7 +54,7 @@ if SETTINGS.REVERT_CHANGES_MODE:
             files_moved_count += 1
 else:
     for file in os.listdir():
-        if file.endswith(tuple(SETTINGS.EXTENSIONS)):
+        if (SETTINGS.USE_ALL_FILE_EXTENSIONS and not file.name.endswith('.py')) or file.endswith(tuple(SETTINGS.EXTENSIONS)):
             if SETTINGS.USE_MODIFIED_TIME:
                 file_timestamp = os.path.getmtime(file)
             else:
