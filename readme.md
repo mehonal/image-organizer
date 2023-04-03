@@ -17,7 +17,15 @@ Currently, settings are embedded into the script file itself under the class `SE
 - DAY_FOLDER: If set to `True`, it will include the day in the folder hierarchy.
 - HOUR_FOLDER: If set to `True`, it will include the hour in the folder hierarchy.
 - MINUTE_FOLDER: If set to `True`, it will include the minute in the folder hierarchy.
+- LOG_OPERATIONS: If set to `True`, it will log operations in a log file stored in the root directory of the script.
+- LOG_FILE_NAME: The name of the log file keeping the logs of the operations.
+- OVERWRITE_LOG_FILE: If set to `True`, any previous log files with the current LOG_FILE_NAME will be overwritten. If set to `False`, previous operations that were logged will be preserved, and the new operations will be appended.
+
+
+
+# Compatibility
+The script has been tested to work on Linux and Windows.
 
 # Warnings
-- The script is still Work-In-Progress, so please be cautious with using it.
+- The script is still Work-In-Progress, and lacks enough testing so please be cautious with using it.
 - The REVERT_CHANGES_MODE currently recursively checks all folders in the root directory, and will move files with the matching file extensions regardless of whether they were moved by the script in the first place.
