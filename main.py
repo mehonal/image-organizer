@@ -6,7 +6,7 @@ from pathlib import Path
 print("Starting script.")
 
 class SETTINGS:
-    EXTENSIONS = [".jpeg",".jpg",".png",".svg"]
+    EXTENSIONS = [".jpeg",".jpg",".png",".svg"] # note: this is case sensitive
     USE_MODIFIED_TIME = True
     REVERT_CHANGES_MODE = False
     YEAR_FOLDER = True # makes a folder for each year
@@ -45,7 +45,6 @@ else:
             if folder_path[-1] == "/":
                 folder_path = folder_path[:-1]
             print(folder_path)
-            path_exists = False
             Path(folder_path).mkdir(parents=True, exist_ok=True)
             if os.path.exists(folder_path):
                 print(f"Moving {file} to {folder_path}")
