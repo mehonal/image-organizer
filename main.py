@@ -29,7 +29,7 @@ if SETTINGS.LOG_OPERATIONS:
     del mode
     log_file.write(f"-----------------------------------------------\n")
 
-start = datetime.now()
+start = datetime.datetime.now()
 log = f"Script Started: {start}\n"
 if SETTINGS.LOG_OPERATIONS:
     log_file.write(log)
@@ -93,13 +93,13 @@ else:
                         log_file.write(log + "\n")
 
 
-end = datetime.now()
+end = datetime.datetime.now()
 time_elapsed = (end - start).total_seconds()
 log = f"Script Finished Running: {end}\n"
 if SETTINGS.LOG_OPERATIONS:
     log_file.write(log)
 print(log)
-log = f"Total Time Elapsed: {time_elapsed}\n"
+log = f"Total Time Elapsed: {time_elapsed} seconds\n"
 if SETTINGS.LOG_OPERATIONS:
     log_file.write(log)
 print(log)
