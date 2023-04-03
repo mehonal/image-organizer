@@ -18,6 +18,7 @@ class SETTINGS:
     LOG_FILE_NAME =  'image_operations.log' # only used if LOG_OPERATIONS is set to True; name of the log file
     OVERWRITE_LOG_FILE = True # if set to True, it overwrites previous logs of operations from the past (assuming the log file name has not changed)
 
+files_moved_count = 0 # logs the number of files moved
 
 if SETTINGS.LOG_OPERATIONS:
     if SETTINGS.OVERWRITE_LOG_FILE:
@@ -25,10 +26,14 @@ if SETTINGS.LOG_OPERATIONS:
     else:
         mode = 'a'
     log_file = open(SETTINGS.LOG_FILE_NAME, mode)
-    log_file.write(f"-----------------------------------------------\n")
-    start = datetime.now()
-    log_file.write(f"Log Initiated: {start}\n")
     del mode
+    log_file.write(f"-----------------------------------------------\n")
+
+start = datetime.now()
+log = f"Script Started: {start}\n"
+if SETTINGS.LOG_OPERATIONS:
+    log_file.write(log)
+print(log)
 
 if SETTINGS.REVERT_CHANGES_MODE:
     root_directory = Path('.')
@@ -75,6 +80,7 @@ else:
                         if SETTINGS.LOG_OPERATIONS:
                             log_file.write(log + "\n")
                         shutil.move(os.getcwd() + "/" + file, folder_path + "/" + file)
+                        files_moved_count += 1
                     else:
                         log = f"Missing folder \"{folder_path}\"!"
                         print(log)
@@ -86,11 +92,22 @@ else:
                     if SETTINGS.LOG_OPERATIONS:
                         log_file.write(log + "\n")
 
+
+end = datetime.now()
+time_elapsed = (end - start).total_seconds()
+log = f"Script Finished Running: {end}\n"
 if SETTINGS.LOG_OPERATIONS:
-    end = datetime.now()
-    log_file.write(f"Log Finished: {end}\n")
-    time_elapsed = (end - start).total_seconds()
-    log_file.write(f"Total Time Elapsed: {time_elapsed}\n")
+    log_file.write(log)
+print(log)
+log = f"Total Time Elapsed: {time_elapsed}\n"
+if SETTINGS.LOG_OPERATIONS:
+    log_file.write(log)
+print(log)
+log = f"Number of Files Moved: {files_moved_count}\n"
+if SETTINGS.LOG_OPERATIONS:
+    log_file.write(log)
+print(log)
+if SETTINGS.LOG_OPERATIONS:
     log_file.close()
 
 print("Script finished executing.")
